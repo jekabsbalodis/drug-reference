@@ -7,15 +7,15 @@ class DrugSearchScreen extends StatelessWidget {
   final SupabaseClient supabase;
 
   Future<List<Map<String, dynamic>>> fetchData() async {
-    final data = await supabase
-        .from('drug_reference')
-        .select()
-        .ilike('short_name', 'ibumet%')
-        .limit(10);
-    return data;
     // final data = await supabase
-    //     .rpc('fuzzy_search', params: {'search_term': 'ibumetīns'});
+    //     .from('drug_reference')
+    //     .select()
+    //     .ilike('short_name', 'ibumet%')
+    //     .limit(10);
     // return data;
+    final data = await supabase
+        .rpc('fuzzy_search', params: {'search_term': 'tramadols'}).select('*');
+    return data;
   }
 
   @override
