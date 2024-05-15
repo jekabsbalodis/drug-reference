@@ -22,8 +22,7 @@ class DrugSearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text('Medikamentu references')),
-        body: SelectionArea(
-            child: FutureBuilder(
+      body: FutureBuilder(
           future: fetchData(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
