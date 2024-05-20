@@ -1,5 +1,4 @@
 import 'package:drug_reference/constants.dart';
-import 'package:drug_reference/widgets/accept_terms.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -11,28 +10,48 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  bool _isAccepted = false;
+
   void _openTermsScreen() {
     showDialog(
-        context: context,
-        builder: ((context) => AlertDialog(
-              content: const SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(appUsageTerms),
-                ),
+      context: context,
+      builder: ((context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(
+                appUsageTerms,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Theme.of(context).colorScheme.onSurface),
               ),
-              actions: [TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Atcelt')),
-                        FilledButton(
-                        onPressed: () {
-                          ;
-                        },
-                        child: const Text('Atcelt'))],
-            )));
-    return;
+            ),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context, false);
+                },
+                child: const Text('Atcelt')),
+            FilledButton(
+                onPressed: () {
+                  Navigator.pop(context, true);
+                },
+                child: const Text('Piekrist noteikumiem'))
+          ],
+        );
+      }),
+    ).then(
+      (value) {
+        if (value != null) {
+          setState(() {
+            _isAccepted = value;
+          });
+        }
+      },
+    );
   }
 
   @override
@@ -81,7 +100,24 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              const AcceptTerms(text: acceptTerms),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Checkbox(
+                      value: _isAccepted,
+                      onChanged: (newValue) {
+                        setState(() => _isAccepted = newValue!);
+                      }),
+                  const SizedBox(width: 6),
+                  Flexible(
+                    child: Text(
+                      acceptTerms,
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface),
+                    ),
+                  )
+                ],
+              ),
               const SizedBox(height: 24)
             ],
           ),
