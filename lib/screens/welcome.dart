@@ -2,6 +2,10 @@ import 'package:drug_reference/constants.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/accept_terms_alert.dart';
+import '../widgets/accept_terms_dialog.dart';
+import '../widgets/medication_search.dart';
+
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
 
@@ -16,32 +20,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     showDialog(
       context: context,
       builder: ((context) {
-        return AlertDialog(
-          content: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Text(
-                appUsageTerms,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Theme.of(context).colorScheme.onSurface),
-              ),
-            ),
-          ),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.pop(context, false);
-                },
-                child: const Text('Atcelt')),
-            FilledButton(
-                onPressed: () {
-                  Navigator.pop(context, true);
-                },
-                child: const Text('Piekrist noteikumiem'))
-          ],
-        );
+        return const AcceptTermsDialog();
       }),
     ).then(
       (value) {
@@ -54,6 +33,24 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 
+  void _openSearchScreen() {
+    if (_isAccepted == false) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const AcceptTermsAlert();
+        },
+      );
+    } else {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return const MedicationSearch();
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SelectionArea(
@@ -61,64 +58,83 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         appBar: AppBar(
           title: const Text('Pārbaudīt medikamentu'),
           actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.search))
+            IconButton(
+                onPressed: () {
+                  _openSearchScreen();
+                },
+                icon: const Icon(Icons.search))
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               const Spacer(),
               FilledButton(
-                  onPressed: () {}, child: const Text('Meklēt medikamentus')),
+                  onPressed: () {
+                    _openSearchScreen();
+                  },
+                  child: const Text('Meklēt medikamentus')),
               const SizedBox(height: 48),
-              Text.rich(
-                TextSpan(
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(color: Theme.of(context).colorScheme.onSurface),
-                  children: [
-                    TextSpan(text: termsPrompt[0]),
-                    TextSpan(
-                        text: termsPrompt[1],
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            decoration: TextDecoration.underline,
-                            decorationColor:
-                                Theme.of(context).colorScheme.onSurface,
-                            color: Theme.of(context).colorScheme.onSurface),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            _openTermsScreen();
-                          }),
-                    TextSpan(
-                        text: termsPrompt[2],
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface)),
-                  ],
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Text.rich(
+                  TextSpan(
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface),
+                    children: [
+                      TextSpan(text: termsPrompt[0]),
+                      TextSpan(
+                          text: termsPrompt[1],
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                  decoration: TextDecoration.underline,
+                                  decorationColor:
+                                      Theme.of(context).colorScheme.onSurface,
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              _openTermsScreen();
+                            }),
+                      TextSpan(
+                          text: termsPrompt[2],
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface)),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 24),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Checkbox(
-                      value: _isAccepted,
-                      onChanged: (newValue) {
-                        setState(() => _isAccepted = newValue!);
-                      }),
-                  const SizedBox(width: 6),
+                  SizedBox(
+                    height: 32,
+                    width: 32,
+                    child: Checkbox(
+                        value: _isAccepted,
+                        onChanged: (newValue) {
+                          setState(() => _isAccepted = newValue!);
+                        }),
+                  ),
                   Flexible(
                     child: Text(
                       acceptTerms,
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           color: Theme.of(context).colorScheme.onSurface),
                     ),
-                  )
+                  ),
                 ],
               ),
-              const SizedBox(height: 24)
+              const SizedBox(height: 24),
             ],
           ),
         ),
