@@ -1,4 +1,4 @@
-import 'package:drug_reference/screens/drug_search.dart';
+import 'package:drug_reference/screens/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -37,11 +37,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: theme,
       darkTheme: darkTheme,
-      home: SelectionArea(
-        child: DrugSearchScreen(
-          supabase: _supabase,
-        ),
-      ),
+      home: const WelcomeScreen(),
     );
   }
 }
