@@ -1,4 +1,4 @@
-import 'package:drug_reference/screens/welcome.dart';
+import 'package:drug_reference/drug_reference.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -23,13 +23,13 @@ const supabaseKey = String.fromEnvironment('SUPABASE_KEY');
 
 Future<void> main() async {
   await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
-  runApp(const App());
+  runApp(App());
 }
 
 class App extends StatelessWidget {
-  const App({super.key});
+  App({super.key});
 
-  // final _supabase = Supabase.instance.client;
+  final _supabase = Supabase.instance.client;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: theme,
       darkTheme: darkTheme,
-      home: const WelcomeScreen(),
+      home: DrugReference(supabase: _supabase),
     );
   }
 }
