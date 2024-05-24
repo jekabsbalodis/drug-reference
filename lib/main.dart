@@ -35,6 +35,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      title: 'Medikamentu pārbaude',
       theme: theme,
       darkTheme: darkTheme,
       home: DrugReference(supabase: _supabase),
