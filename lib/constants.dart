@@ -9,3 +9,4 @@ const List<String> termsPrompt = [
   '.'
 ];
 const String acceptTerms = 'Apstiprinu lietotnes lietošanas nosacījumus';
+const String emptyResults = 'Netika atrasts neviens medikaments, lūdzu pārbaudi ievadīto frāzi un mēģini vēlreiz';
