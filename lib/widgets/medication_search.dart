@@ -17,9 +17,11 @@ class MedicationSearch extends StatefulWidget {
 class _MedicationSearchState extends State<MedicationSearch> {
   final _searchTermController = TextEditingController();
   SearchMode _selectedSearchMode = SearchMode.activeSubstance;
+  final focusNode = FocusNode();
 
   void _setSearchMode(SearchMode mode) {
     _selectedSearchMode = mode;
+    focusNode.requestFocus();
   }
 
   void _submitSearchTerm() {
@@ -52,17 +54,21 @@ class _MedicationSearchState extends State<MedicationSearch> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
-                  child: TextField(
-                    controller: _searchTermController,
-                    keyboardType: TextInputType.text,
-                    decoration: const InputDecoration(
-                        label: Text('Meklēt medikamentu')),
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface),
-                    onSubmitted: (value) {
-                      _submitSearchTerm();
-                    },
-                    autofocus: true,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: TextField(
+                      controller: _searchTermController,
+                      keyboardType: TextInputType.text,
+                      decoration: const InputDecoration(
+                          label: Text('Meklēt medikamentu')),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface),
+                      onSubmitted: (value) {
+                        _submitSearchTerm();
+                      },
+                      autofocus: true,
+                      focusNode: focusNode,
+                    ),
                   ),
                 ),
                 FilledButton(
