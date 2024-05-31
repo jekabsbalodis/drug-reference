@@ -12,7 +12,8 @@ class MedicationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Uri url = Uri.parse(
-        'https://www.antidopings.gov.lv/lv/darbinieki?items_per_page=20&position%5B120%5D=120&position%5B123%5D=123');
+        'https://www.antidopings.gov.lv/lv/darbinieki'
+        '?items_per_page=20&position%5B120%5D=120&position%5B123%5D=123#content-area');
 
     Future<void> openUrl() async {
       if (!await launchUrl(url)) {
