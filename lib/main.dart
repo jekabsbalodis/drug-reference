@@ -8,14 +8,14 @@ final theme = ThemeData(
     seedColor: const Color.fromRGBO(229, 114, 0, 1),
     brightness: Brightness.light,
   ),
-  textTheme: GoogleFonts.cousineTextTheme(),
+  textTheme: GoogleFonts.openSansTextTheme(),
 );
 final darkTheme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
     seedColor: const Color.fromRGBO(139, 70, 0, 1),
     brightness: Brightness.dark,
   ),
-  textTheme: GoogleFonts.cousineTextTheme(),
+  textTheme: GoogleFonts.openSansTextTheme(),
 );
 
 const supabaseUrl = String.fromEnvironment('SUPABASE_URL');

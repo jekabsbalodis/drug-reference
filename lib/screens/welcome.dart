@@ -84,18 +84,18 @@ class _WelcomeState extends State<Welcome> with TickerProviderStateMixin {
         },
       ));
     }
-    else {
-      Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (ctx) {
-          return ResultsScreen(
-            supabase: widget.supabase,
-            searchFunction: searchFunction,
-            searchTerm: searchTerm,
-            onActionButtonPress: _openSearchScreen,
-          );
-        },
-      ));
-    }
+    // else {
+    //   Navigator.pushReplacement(context, MaterialPageRoute(
+    //     builder: (ctx) {
+    //       return ResultsScreen(
+    //         supabase: widget.supabase,
+    //         searchFunction: searchFunction,
+    //         searchTerm: searchTerm,
+    //         onActionButtonPress: _openSearchScreen,
+    //       );
+    //     },
+    //   ));
+    // }
   }
 
   @override

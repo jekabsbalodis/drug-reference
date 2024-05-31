@@ -13,8 +13,27 @@ class MedicationScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text(searchResult.shortName),
         ),
-        body: Center(
-          child: Text(searchResult.substance),
+        body: Padding(
+          padding: const EdgeInsets.all(8),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${searchResult.shortName} ${searchResult.formattedForm}\n'
+                  '${searchResult.substance}\n'
+                  'Reģistrācijas numurs: ${searchResult.regNo}',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(color: Theme.of(context).colorScheme.onSurface),
+                ),
+                if (searchResult.prohibitedInComp!.isNotEmpty)
+                  Text(searchResult.prohibitedInComp!)
+                else const Text('no data'),
+              ],
+            ),
+          ),
         ),
       ),
     );

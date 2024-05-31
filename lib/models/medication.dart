@@ -43,4 +43,7 @@ class Medication {
           data['Sporta veidi, kuros aizliegts sacensību laikā'] as String,
     );
   }
+  String get formattedForm {
+    return '${form[0].toLowerCase()}${form.substring(1)}';
+  }
 }
