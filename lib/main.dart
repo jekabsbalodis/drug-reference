@@ -1,4 +1,4 @@
-import 'package:drug_reference/drug_reference.dart';
+import 'package:drug_reference/screens/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -34,11 +34,11 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'Medikamentu pārbaude',
       theme: theme,
       darkTheme: darkTheme,
-      home: DrugReference(supabase: _supabase),
+      locale: const Locale('lv', 'LV'),
+      home: Welcome(supabase: _supabase),
     );
   }
 }

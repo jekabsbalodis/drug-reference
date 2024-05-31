@@ -25,16 +25,17 @@ class _MedicationSearchState extends State<MedicationSearch> {
   }
 
   void _submitSearchTerm() {
+    Navigator.pop(context);
     widget.onEnterSearchTerm(
       _searchTermController.text,
       _selectedSearchMode,
     );
-    Navigator.pop(context);
   }
 
   @override
   void dispose() {
     _searchTermController.dispose();
+    focusNode.dispose();
     super.dispose();
   }
 
