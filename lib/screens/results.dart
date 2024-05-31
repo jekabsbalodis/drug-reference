@@ -1,29 +1,79 @@
 import 'package:drug_reference/constants.dart';
 import 'package:drug_reference/models/medication.dart';
 import 'package:drug_reference/screens/medication.dart';
+import 'package:drug_reference/widgets/medication_search.dart';
+import 'package:drug_reference/widgets/search_mode_button.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class ResultsScreen extends StatelessWidget {
-  const ResultsScreen({
-    super.key,
-    required this.supabase,
-    required this.searchFunction,
-    required this.searchTerm,
-    required this.onActionButtonPress,
-  });
+class ResultsScreen extends StatefulWidget {
+  const ResultsScreen(
+      {super.key,
+      required this.supabase,
+      required this.searchMode,
+      required this.searchTerm,
+      required this.termsAccepted});
 
   final SupabaseClient supabase;
-  final String searchFunction;
+  final SearchMode searchMode;
   final String searchTerm;
-  final void Function() onActionButtonPress;
+  final bool termsAccepted;
 
-  Future<List<Medication>> searchResults(String searchMode, String term) async {
-    final data = await supabase
-        .rpc(searchMode, params: {'search_term': term}).select('*');
+  @override
+  State<ResultsScreen> createState() => _ResultsScreenState();
+}
+
+class _ResultsScreenState extends State<ResultsScreen> {
+  late String _searchTerm;
+  late SearchMode _searchMode;
+  
+  @override
+  void initState() {
+    super.initState();
+    _searchTerm = widget.searchTerm;
+    _searchMode = widget.searchMode;
+  }
+
+  Future<List<Medication>> searchResults(
+      SearchMode searchMode, String searchTerm) async {
+    final String searchFunction;
+    switch (searchMode) {
+      case SearchMode.name:
+        searchFunction = 'fuzzy_search';
+      case SearchMode.activeSubstance:
+        searchFunction = 'fuzzy_search_active_substance';
+      case SearchMode.regNo:
+        searchFunction = 'fuzzy_search_reg_no';
+    }
+    final data = await widget.supabase
+        .rpc(searchFunction, params: {'search_term': searchTerm}).select('*');
     final dataParsed =
         data.map<Medication>((item) => Medication.fromSupabase(item)).toList();
     return dataParsed;
+  }
+
+  void _newSearch() {
+    if (widget.termsAccepted == false) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          duration: Duration(seconds: 3),
+          content: Text('Jāapstiprina noteikumi')));
+    } else {
+      showModalBottomSheet(
+          useSafeArea: true,
+          isScrollControlled: true,
+          context: context,
+          builder: (ctx) =>
+              MedicationSearch(onEnterSearchTerm: _submitNewSearchTerm));
+    }
+  }
+
+  void _submitNewSearchTerm(String searchTerm, SearchMode searchMode) {
+    setState(() {
+      _searchTerm = searchTerm;
+      _searchMode = searchMode;
+      searchResults(_searchMode, _searchTerm);
+    });
   }
 
   void _selectMedication(BuildContext context, Medication searchResult) {
@@ -43,7 +93,7 @@ class ResultsScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(title: const Text('Medikamentu references')),
         body: FutureBuilder(
-          future: searchResults(searchFunction, searchTerm),
+          future: searchResults(_searchMode, _searchTerm),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
@@ -75,7 +125,7 @@ class ResultsScreen extends StatelessWidget {
           },
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: onActionButtonPress,
+          onPressed: _newSearch,
           child: const Icon(Icons.search),
         ),
       ),

@@ -23,13 +23,13 @@ const supabaseKey = String.fromEnvironment('SUPABASE_KEY');
 
 Future<void> main() async {
   await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
-  runApp(App());
+  runApp(const App());
 }
 
 class App extends StatelessWidget {
-  App({super.key});
+  const App({super.key});
 
-  final _supabase = Supabase.instance.client;
+  static final supabase = Supabase.instance.client;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class App extends StatelessWidget {
       theme: theme,
       darkTheme: darkTheme,
       locale: const Locale('lv', 'LV'),
-      home: Welcome(supabase: _supabase),
+      home: const Welcome(),
     );
   }
 }
