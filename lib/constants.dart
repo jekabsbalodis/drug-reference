@@ -9,4 +9,10 @@ const List<String> termsPrompt = [
   '.'
 ];
 const String acceptTerms = 'Apstiprinu lietotnes lietošanas nosacījumus';
-const String emptyResults = 'Netika atrasts neviens medikaments, lūdzu pārbaudi ievadīto frāzi un mēģini vēlreiz';
+const String emptyResults =
+    'Netika atrasts neviens medikaments, lūdzu pārbaudi ievadīto frāzi un mēģini vēlreiz';
+const List<String> noInformation = [
+  'Nav pieejama informācija par šī medikamenta lietošanu sportā. Lūdzu sazinies ar ',
+  'Latvijas Antidopinga biroju',
+  ', lai iegūtu informāciju par medikamenta izmantošanu sportā.',
+];

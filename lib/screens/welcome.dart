@@ -115,7 +115,7 @@ class _WelcomeState extends State<Welcome> with TickerProviderStateMixin {
                       decorationColor: Theme.of(context).colorScheme.onSurface,
                       color: Theme.of(context).colorScheme.onSurface),
                   recognizer: TapGestureRecognizer()
-                    ..onTap = () => _openTermsScreen()),
+                    ..onTap = _openTermsScreen),
               TextSpan(
                   text: termsPrompt[2],
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(

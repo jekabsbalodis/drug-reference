@@ -5,12 +5,12 @@ class Medication {
     required this.regNo,
     required this.form,
     required this.substance,
-    this.prohibitedOutComp,
-    this.prohibitedInComp,
-    this.prohibitedClass,
-    this.notes,
-    this.prohibitedSportsOutComp,
-    this.prohibitedSportsInComp,
+    required this.prohibitedOutComp,
+    required this.prohibitedInComp,
+    required this.prohibitedClass,
+    required this.notes,
+    required this.prohibitedSportsOutComp,
+    required this.prohibitedSportsInComp,
   });
 
   final String name;
@@ -18,12 +18,12 @@ class Medication {
   final String regNo;
   final String form;
   final String substance;
-  final String? prohibitedOutComp;
-  final String? prohibitedInComp;
-  final String? prohibitedClass;
-  final String? notes;
-  final String? prohibitedSportsOutComp;
-  final String? prohibitedSportsInComp;
+  final String prohibitedOutComp;
+  final String prohibitedInComp;
+  final String prohibitedClass;
+  final String notes;
+  final String prohibitedSportsOutComp;
+  final String prohibitedSportsInComp;
 
   factory Medication.fromSupabase(Map<String, dynamic> data) {
     return Medication(
