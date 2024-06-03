@@ -26,7 +26,8 @@ class ResultsScreen extends StatefulWidget {
 class _ResultsScreenState extends State<ResultsScreen> {
   late String _searchTerm;
   late SearchMode _searchMode;
-  
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -68,12 +69,23 @@ class _ResultsScreenState extends State<ResultsScreen> {
     }
   }
 
+  void _scrollToTop() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        0.0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
   void _submitNewSearchTerm(String searchTerm, SearchMode searchMode) {
     setState(() {
       _searchTerm = searchTerm;
       _searchMode = searchMode;
       searchResults(_searchMode, _searchTerm);
     });
+    _scrollToTop();
   }
 
   void _selectMedication(BuildContext context, Medication searchResult) {
@@ -112,13 +124,19 @@ class _ResultsScreenState extends State<ResultsScreen> {
               );
             }
             return ListView.builder(
+              controller: _scrollController,
               itemCount: searchResults.length,
               itemBuilder: ((context, index) {
                 final searchResult = searchResults[index];
-                return ListTile(
-                  title: Text(searchResult.shortName),
-                  subtitle: Text(searchResult.substance),
-                  onTap: () => _selectMedication(context, searchResult),
+                return Card(
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
+                    title: Text(
+                        '${searchResult.shortName}, ${searchResult.formattedForm}'),
+                    subtitle: Text(searchResult.substance),
+                    onTap: () => _selectMedication(context, searchResult),
+                  ),
                 );
               }),
             );

@@ -1,5 +1,7 @@
 import 'package:drug_reference/constants.dart';
 import 'package:drug_reference/models/medication.dart';
+import 'package:drug_reference/widgets/medication_information_in_comp.dart';
+import 'package:drug_reference/widgets/medication_information_out_comp.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -11,9 +13,7 @@ class MedicationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Uri url = Uri.parse(
-        'https://www.antidopings.gov.lv/lv/darbinieki'
-        '?items_per_page=20&position%5B120%5D=120&position%5B123%5D=123#content-area');
+    final Uri url = Uri.parse(const String.fromEnvironment('ANTIDOPING_URL'));
 
     Future<void> openUrl() async {
       if (!await launchUrl(url)) {
@@ -31,39 +31,120 @@ class MedicationScreen extends StatelessWidget {
         .bodyLarge!
         .copyWith(color: Theme.of(context).colorScheme.onSurface);
 
-    Widget information = Text(
-      'Aizliegts sacensībās: ${searchResult.prohibitedInComp}\n'
-      'Aizliegts ārpus sacensībām: ${searchResult.prohibitedOutComp}',
-      style: textStyleLarge,
-    );
+    TextStyle textStyleSmall = Theme.of(context)
+        .textTheme
+        .bodySmall!
+        .copyWith(color: Theme.of(context).colorScheme.onSurface);
 
-    if (searchResult.prohibitedInComp.isEmpty) {
-      information = Padding(
-        padding: const EdgeInsets.only(top: 24),
-        child: Center(
-          child: Text.rich(
-            TextSpan(
-              style: textStyleLarge,
+    List<Widget> information = [
+      const SizedBox(height: 16),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          MedicationInformationInCompetion(searchResult: searchResult),
+          MedicationInformationOutCompetion(searchResult: searchResult),
+        ],
+      ),
+      const SizedBox(height: 8),
+      if (searchResult.prohibitedClass.isNotEmpty)
+        Text(
+          'Aizliegto vielu un metožu saraksta klase: ${searchResult.prohibitedClass}',
+          style: textStyleMedium,
+        ),
+      const SizedBox(height: 8),
+      if (searchResult.notes.isNotEmpty)
+        Column(
+          children: [
+            Row(
               children: [
-                TextSpan(text: noInformation[0]),
-                TextSpan(
-                    text: noInformation[1],
-                    style: textStyleLarge.copyWith(
-                        decoration: TextDecoration.underline,
-                        decorationColor:
-                            Theme.of(context).colorScheme.onSurface,
-                        color: Theme.of(context).colorScheme.onSurface),
-                    recognizer: TapGestureRecognizer()..onTap = openUrl),
-                TextSpan(
-                  text: termsPrompt[2],
-                  style: textStyleLarge,
+                const Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Icon(
+                    Icons.warning,
+                    color: Colors.amber,
+                  ),
                 ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        searchResult.notes,
+                        style: textStyleMedium,
+                        softWrap: true,
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
-            textAlign: TextAlign.center,
-          ),
+          ],
         ),
-      );
+      const SizedBox(height: 16),
+      const Divider(),
+      if (searchResult.prohibitedSportsInComp.isNotEmpty)
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 4),
+            Text(
+              'Sporta veidi, kuros aizliegts sacensību laikā:',
+              style: textStyleMedium,
+              softWrap: true,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              searchResult.prohibitedSportsInComp,
+              style: textStyleSmall,
+              softWrap: true,
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      if (searchResult.prohibitedSportsOutComp.isNotEmpty)
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Sporta veidi, kuros aizliegts ārpus sacensību laika:',
+              style: textStyleMedium,
+              softWrap: true,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              searchResult.prohibitedSportsOutComp,
+              style: textStyleSmall,
+              softWrap: true,
+            ),
+          ],
+        ),
+    ];
+
+    if (searchResult.prohibitedInComp.isEmpty) {
+      information = [
+        const Spacer(),
+        Text.rich(
+          TextSpan(
+            style: textStyleLarge,
+            children: [
+              TextSpan(text: noInformation[0]),
+              TextSpan(
+                  text: noInformation[1],
+                  style: textStyleLarge.copyWith(
+                      decoration: TextDecoration.underline,
+                      decorationColor: Theme.of(context).colorScheme.onSurface,
+                      color: Theme.of(context).colorScheme.onSurface),
+                  recognizer: TapGestureRecognizer()..onTap = openUrl),
+              TextSpan(
+                text: termsPrompt[2],
+                style: textStyleLarge,
+              ),
+            ],
+          ),
+          textAlign: TextAlign.center,
+        ),
+        const Spacer(),
+      ];
     }
 
     return SelectionArea(
@@ -90,7 +171,7 @@ class MedicationScreen extends StatelessWidget {
                   style: textStyleMedium,
                 ),
                 const Divider(),
-                information,
+                ...information,
               ],
             ),
           ),
