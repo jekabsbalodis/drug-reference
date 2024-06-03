@@ -159,7 +159,7 @@ class MedicationScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${searchResult.shortName} ${searchResult.formattedForm}',
+                  '${searchResult.shortName}, ${searchResult.formattedForm}',
                   style: textStyleMedium,
                 ),
                 Text(
