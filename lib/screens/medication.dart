@@ -122,28 +122,30 @@ class MedicationScreen extends StatelessWidget {
 
     if (searchResult.prohibitedInComp.isEmpty) {
       information = [
-        const Spacer(),
-        Text.rich(
-          TextSpan(
-            style: textStyleLarge,
-            children: [
-              TextSpan(text: noInformation[0]),
-              TextSpan(
-                  text: noInformation[1],
-                  style: textStyleLarge.copyWith(
-                      decoration: TextDecoration.underline,
-                      decorationColor: Theme.of(context).colorScheme.onSurface,
-                      color: Theme.of(context).colorScheme.onSurface),
-                  recognizer: TapGestureRecognizer()..onTap = openUrl),
-              TextSpan(
-                text: termsPrompt[2],
-                style: textStyleLarge,
-              ),
-            ],
+        const SizedBox(height: 16),
+        Center(
+          child: Text.rich(
+            TextSpan(
+              style: textStyleLarge,
+              children: [
+                TextSpan(text: noInformation[0]),
+                TextSpan(
+                    text: noInformation[1],
+                    style: textStyleLarge.copyWith(
+                        decoration: TextDecoration.underline,
+                        decorationColor:
+                            Theme.of(context).colorScheme.onSurface,
+                        color: Theme.of(context).colorScheme.onSurface),
+                    recognizer: TapGestureRecognizer()..onTap = openUrl),
+                TextSpan(
+                  text: termsPrompt[2],
+                  style: textStyleLarge,
+                ),
+              ],
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
         ),
-        const Spacer(),
       ];
     }
 
