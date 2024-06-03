@@ -27,7 +27,7 @@ class _MedicationSearchState extends State<MedicationSearch> {
   void _submitSearchTerm() {
     Navigator.pop(context);
     widget.onEnterSearchTerm(
-      _searchTermController.text,
+      _searchTermController.text.trim(),
       _selectedSearchMode,
     );
   }
