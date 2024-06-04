@@ -5,6 +5,7 @@ class Medication {
     required this.regNo,
     required this.form,
     required this.substance,
+    required this.strength,
     required this.prohibitedOutComp,
     required this.prohibitedInComp,
     required this.prohibitedClass,
@@ -18,6 +19,7 @@ class Medication {
   final String regNo;
   final String form;
   final String substance;
+  final String strength;
   final String prohibitedOutComp;
   final String prohibitedInComp;
   final String prohibitedClass;
@@ -32,6 +34,7 @@ class Medication {
       regNo: data['authorisation_no'] as String,
       form: data['pharmaceutical_form_lv'] as String,
       substance: data['active_substance'] as String,
+      strength: data['strength_lv'] as String,
       prohibitedOutComp: data['Aizliegts ārpus sacensībām'] as String,
       prohibitedInComp: data['Aizliegts sacensību laikā'] as String,
       prohibitedClass:

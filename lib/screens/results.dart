@@ -128,12 +128,18 @@ class _ResultsScreenState extends State<ResultsScreen> {
               itemCount: searchResults.length,
               itemBuilder: ((context, index) {
                 final searchResult = searchResults[index];
+                Widget titleText;
+                if (searchResult.strength.isEmpty) {
+                  titleText = Text(searchResult.shortName);
+                } else {
+                  titleText = Text(
+                      '${searchResult.shortName}|${searchResult.strength}');
+                }
                 return Card(
                   child: ListTile(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12)),
-                    title: Text(
-                        '${searchResult.shortName}, ${searchResult.formattedForm}'),
+                    title: titleText,
                     subtitle: Text(searchResult.substance),
                     onTap: () => _selectMedication(context, searchResult),
                   ),
