@@ -193,32 +193,34 @@ class MedicationScreen extends StatelessWidget {
         ),
       );
     } else {
-      return Padding(
-        padding: const EdgeInsets.all(8),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '${searchResult.shortName}|${searchResult.formattedForm}',
-                style: textStyleMedium,
-              ),
-              Text(
-                searchResult.substance,
-                style: textStyleMedium.copyWith(fontWeight: FontWeight.bold),
-              ),
-              if (searchResult.strength.isNotEmpty)
+      return Align(alignment: Alignment.topCenter,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text(
-                  'Medikamenta deva: ${searchResult.strength}',
+                  '${searchResult.shortName}|${searchResult.formattedForm}',
                   style: textStyleMedium,
                 ),
-              Text(
-                'Reģistrācijas numurs: ${searchResult.regNo}',
-                style: textStyleMedium,
-              ),
-              const Divider(),
-              ...information,
-            ],
+                Text(
+                  searchResult.substance,
+                  style: textStyleMedium.copyWith(fontWeight: FontWeight.bold),
+                ),
+                if (searchResult.strength.isNotEmpty)
+                  Text(
+                    'Medikamenta deva: ${searchResult.strength}',
+                    style: textStyleMedium,
+                  ),
+                Text(
+                  'Reģistrācijas numurs: ${searchResult.regNo}',
+                  style: textStyleMedium,
+                ),
+                const Divider(),
+                ...information,
+              ],
+            ),
           ),
         ),
       );
