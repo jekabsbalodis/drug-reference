@@ -114,8 +114,7 @@ class _WelcomeState extends State<Welcome> with TickerProviderStateMixin {
                       decoration: TextDecoration.underline,
                       decorationColor: Theme.of(context).colorScheme.onSurface,
                       color: Theme.of(context).colorScheme.onSurface),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = _openTermsScreen),
+                  recognizer: TapGestureRecognizer()..onTap = _openTermsScreen),
               TextSpan(
                   text: termsPrompt[2],
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -136,16 +135,46 @@ class _WelcomeState extends State<Welcome> with TickerProviderStateMixin {
         const SizedBox(height: 40),
       ],
     );
-    return SelectionArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Medikamentu pārbaude'),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(8),
-          child: mainContent,
-        ),
-      ),
-    );
+    return LayoutBuilder(builder: (ctx, constraints) {
+      final width = constraints.maxWidth;
+
+      if (width < 600) {
+        return SelectionArea(
+          child: Scaffold(
+            appBar: AppBar(
+              title: const Text('Medikamentu pārbaude'),
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(8),
+              child: mainContent,
+            ),
+          ),
+        );
+      } else {
+        return SelectionArea(
+          child: Scaffold(
+            appBar: AppBar(
+              title: const Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                  width: 600,
+                  child: Text('Medikamentu pārbaude'),
+                ),
+              ),
+            ),
+            body: Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                width: 600,
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: mainContent,
+                ),
+              ),
+            ),
+          ),
+        );
+      }
+    });
   }
 }

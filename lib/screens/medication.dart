@@ -7,9 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MedicationScreen extends StatelessWidget {
-  const MedicationScreen({super.key, required this.searchResult});
+  const MedicationScreen({
+    super.key,
+    required this.searchResult,
+    required this.isScreen,
+  });
 
   final Medication searchResult;
+  final bool isScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -149,41 +154,74 @@ class MedicationScreen extends StatelessWidget {
       ];
     }
 
-    return SelectionArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(searchResult.shortName),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(8),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${searchResult.shortName}|${searchResult.formattedForm}',
-                  style: textStyleMedium,
-                ),
-                Text(
-                  searchResult.substance,
-                  style: textStyleMedium.copyWith(fontWeight: FontWeight.bold),
-                ),
-                if (searchResult.strength.isNotEmpty)
+    if (isScreen) {
+      return SelectionArea(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(searchResult.shortName),
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(8),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Text(
-                    'Medikamenta deva: ${searchResult.strength}',
+                    '${searchResult.shortName}|${searchResult.formattedForm}',
                     style: textStyleMedium,
                   ),
-                Text(
-                  'Reģistrācijas numurs: ${searchResult.regNo}',
-                  style: textStyleMedium,
-                ),
-                const Divider(),
-                ...information,
-              ],
+                  Text(
+                    searchResult.substance,
+                    style:
+                        textStyleMedium.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  if (searchResult.strength.isNotEmpty)
+                    Text(
+                      'Medikamenta deva: ${searchResult.strength}',
+                      style: textStyleMedium,
+                    ),
+                  Text(
+                    'Reģistrācijas numurs: ${searchResult.regNo}',
+                    style: textStyleMedium,
+                  ),
+                  const Divider(),
+                  ...information,
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    } else {
+      return Padding(
+        padding: const EdgeInsets.all(8),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${searchResult.shortName}|${searchResult.formattedForm}',
+                style: textStyleMedium,
+              ),
+              Text(
+                searchResult.substance,
+                style: textStyleMedium.copyWith(fontWeight: FontWeight.bold),
+              ),
+              if (searchResult.strength.isNotEmpty)
+                Text(
+                  'Medikamenta deva: ${searchResult.strength}',
+                  style: textStyleMedium,
+                ),
+              Text(
+                'Reģistrācijas numurs: ${searchResult.regNo}',
+                style: textStyleMedium,
+              ),
+              const Divider(),
+              ...information,
+            ],
+          ),
+        ),
+      );
+    }
   }
 }

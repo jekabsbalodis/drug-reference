@@ -26,6 +26,7 @@ class ResultsScreen extends StatefulWidget {
 class _ResultsScreenState extends State<ResultsScreen> {
   late String _searchTerm;
   late SearchMode _searchMode;
+  Widget _selectedResult = const Text('Izvēlies medikamentu no saraksta');
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -84,77 +85,159 @@ class _ResultsScreenState extends State<ResultsScreen> {
       _searchTerm = searchTerm;
       _searchMode = searchMode;
       searchResults(_searchMode, _searchTerm);
+      _selectedResult = const Text('Izvēlies medikamentu no saraksta');
     });
     _scrollToTop();
   }
 
-  void _selectMedication(BuildContext context, Medication searchResult) {
+  void _selectMedicationNewScreen(
+      BuildContext context, Medication searchResult) {
     Medication selectedMedication = searchResult;
     Navigator.push(context, MaterialPageRoute(
       builder: (ctx) {
         return MedicationScreen(
           searchResult: selectedMedication,
+          isScreen: true,
         );
       },
     ));
   }
 
+  void _selectMedicationSameScreen(Medication searchResult) {
+    setState(() {
+      _selectedResult = MedicationScreen(
+        searchResult: searchResult,
+        isScreen: false,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SelectionArea(
-      child: Scaffold(
-        appBar: AppBar(title: const Text('Medikamentu references')),
-        body: FutureBuilder(
-          future: searchResults(_searchMode, _searchTerm),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            final searchResults = snapshot.data!;
-            if (searchResults.isEmpty) {
-              return Center(
-                child: Text(
-                  emptyResults,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(color: Theme.of(context).colorScheme.onSurface),
-                  textAlign: TextAlign.center,
-                ),
-              );
-            }
-            return ListView.builder(
-              controller: _scrollController,
-              itemCount: searchResults.length,
-              itemBuilder: ((context, index) {
-                final searchResult = searchResults[index];
-                Widget titleText;
-                if (searchResult.strength.isEmpty) {
-                  titleText = Text(searchResult.shortName);
-                } else {
-                  titleText = Text(
-                      '${searchResult.shortName}|${searchResult.strength}');
+    return LayoutBuilder(builder: (ctx, constraints) {
+      final width = constraints.maxWidth;
+      if (width < 600) {
+        return SelectionArea(
+          child: Scaffold(
+            appBar: AppBar(title: const Text('Medikamentu references')),
+            body: FutureBuilder(
+              future: searchResults(_searchMode, _searchTerm),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(child: CircularProgressIndicator());
                 }
-                Widget subtitleText =
-                    Text('${searchResult.substance}\n${searchResult.form}');
-                return Card(
-                  child: ListTile(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    title: titleText,
-                    subtitle: subtitleText,
-                    onTap: () => _selectMedication(context, searchResult),
-                  ),
+                final searchResults = snapshot.data!;
+                if (searchResults.isEmpty) {
+                  return Center(
+                    child: Text(
+                      emptyResults,
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface),
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                }
+                return ListView.builder(
+                  controller: _scrollController,
+                  itemCount: searchResults.length,
+                  itemBuilder: ((context, index) {
+                    final searchResult = searchResults[index];
+                    Widget titleText;
+                    if (searchResult.strength.isEmpty) {
+                      titleText = Text(searchResult.shortName);
+                    } else {
+                      titleText = Text(
+                          '${searchResult.shortName}|${searchResult.strength}');
+                    }
+                    Widget subtitleText =
+                        Text('${searchResult.substance}\n${searchResult.form}');
+                    return Card(
+                      child: ListTile(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                        title: titleText,
+                        subtitle: subtitleText,
+                        onTap: () =>
+                            _selectMedicationNewScreen(context, searchResult),
+                      ),
+                    );
+                  }),
                 );
-              }),
-            );
-          },
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _newSearch,
-          child: const Icon(Icons.search),
-        ),
-      ),
-    );
+              },
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: _newSearch,
+              child: const Icon(Icons.search),
+            ),
+          ),
+        );
+      } else {
+        return SelectionArea(
+          child: Scaffold(
+            appBar: AppBar(title: const Text('Medikamentu references')),
+            body: FutureBuilder(
+              future: searchResults(_searchMode, _searchTerm),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                final searchResults = snapshot.data!;
+                if (searchResults.isEmpty) {
+                  return Center(
+                    child: Text(
+                      emptyResults,
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface),
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                }
+                return Row(
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      child: ListView.builder(
+                        controller: _scrollController,
+                        itemCount: searchResults.length,
+                        itemBuilder: ((context, index) {
+                          final searchResult = searchResults[index];
+                          Widget titleText;
+                          if (searchResult.strength.isEmpty) {
+                            titleText = Text(searchResult.shortName);
+                          } else {
+                            titleText = Text(
+                                '${searchResult.shortName}|${searchResult.strength}');
+                          }
+                          Widget subtitleText = Text(
+                              '${searchResult.substance}\n${searchResult.form}');
+                          return Card(
+                              child: ListTile(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            title: titleText,
+                            subtitle: subtitleText,
+                            onTap: () =>
+                                _selectMedicationSameScreen(searchResult),
+                          ));
+                        }),
+                      ),
+                    ),
+                    const VerticalDivider(),
+                    Flexible(
+                      flex: 2,
+                      child: Center(child: _selectedResult),
+                    ),
+                  ],
+                );
+              },
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: _newSearch,
+              child: const Icon(Icons.search),
+            ),
+          ),
+        );
+      }
+    });
   }
 }

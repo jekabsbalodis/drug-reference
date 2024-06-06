@@ -15,24 +15,18 @@ class _AcceptTermsCheckboxState extends State<AcceptTermsCheckbox> {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.center,
-      child: SizedBox(
-        width: (MediaQuery.of(context).size.width > 600)
-            ? 600
-            : MediaQuery.of(context).size.width,
-        child: CheckboxListTile(
-          title: Text(
-            acceptTerms,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(color: Theme.of(context).colorScheme.onSurface),
-          ),
-          value: widget.checkboxState,
-          onChanged: (newValue) => setState(() => widget.onCheckboxPress(newValue!)),
-          controlAffinity: ListTileControlAffinity.leading,
+    return Align(alignment: Alignment.center,
+      child: CheckboxListTile(
+        title: Text(
+          acceptTerms,
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium!
+              .copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
+        value: widget.checkboxState,
+        onChanged: (newValue) => setState(() => widget.onCheckboxPress(newValue!)),
+        controlAffinity: ListTileControlAffinity.leading,
       ),
     );
   }
