@@ -193,7 +193,8 @@ class MedicationScreen extends StatelessWidget {
         ),
       );
     } else {
-      return Align(alignment: Alignment.topCenter,
+      return Align(
+        alignment: Alignment.topCenter,
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: SingleChildScrollView(
