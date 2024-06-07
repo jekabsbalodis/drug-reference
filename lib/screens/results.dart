@@ -196,31 +196,43 @@ class _ResultsScreenState extends State<ResultsScreen> {
                   children: [
                     Flexible(
                       flex: 1,
-                      child: ListView.builder(
-                        controller: _scrollController,
-                        itemCount: searchResults.length,
-                        itemBuilder: ((context, index) {
-                          final searchResult = searchResults[index];
-                          Widget titleText;
-                          if (searchResult.strength.isEmpty) {
-                            titleText = Text(searchResult.shortName);
-                          } else {
-                            titleText = Text(
-                                '${searchResult.shortName}|${searchResult.strength}');
-                          }
-                          Widget subtitleText = Text(
-                              '${searchResult.substance}\n${searchResult.form}');
-                          return Card(
-                              child: ListTile(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
-                            title: titleText,
-                            subtitle: subtitleText,
-                            onTap: () =>
-                                _selectMedicationSameScreen(searchResult),
-                          ));
-                        }),
-                      ),
+                      child: Stack(children: [
+                        ListView.builder(
+                          controller: _scrollController,
+                          itemCount: searchResults.length,
+                          itemBuilder: ((context, index) {
+                            final searchResult = searchResults[index];
+                            Widget titleText;
+                            if (searchResult.strength.isEmpty) {
+                              titleText = Text(searchResult.shortName);
+                            } else {
+                              titleText = Text(
+                                  '${searchResult.shortName}|${searchResult.strength}');
+                            }
+                            Widget subtitleText = Text(
+                                '${searchResult.substance}\n${searchResult.form}');
+                            return Card(
+                                child: ListTile(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12)),
+                              title: titleText,
+                              subtitle: subtitleText,
+                              onTap: () =>
+                                  _selectMedicationSameScreen(searchResult),
+                            ));
+                          }),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: FloatingActionButton(
+                              onPressed: _newSearch,
+                              child: const Icon(Icons.search),
+                            ),
+                          ),
+                        ),
+                      ]),
                     ),
                     const VerticalDivider(),
                     Flexible(
@@ -230,10 +242,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
                   ],
                 );
               },
-            ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: _newSearch,
-              child: const Icon(Icons.search),
             ),
           ),
         );
