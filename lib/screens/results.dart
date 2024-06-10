@@ -27,7 +27,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
   late String _searchTerm;
   late SearchMode _searchMode;
   Widget _selectedResult = const Text('Izvēlies medikamentu no saraksta');
-  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -70,16 +69,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
     }
   }
 
-  void _scrollToTop() {
-    if (_scrollController.hasClients) {
-      _scrollController.animateTo(
-        0.0,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
   void _submitNewSearchTerm(String searchTerm, SearchMode searchMode) {
     setState(() {
       _searchTerm = searchTerm;
@@ -87,7 +76,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
       searchResults(_searchMode, _searchTerm);
       _selectedResult = const Text('Izvēlies medikamentu no saraksta');
     });
-    _scrollToTop();
   }
 
   void _selectMedicationNewScreen(
@@ -126,6 +114,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
                 if (!snapshot.hasData) {
                   return const Center(child: CircularProgressIndicator());
                 }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
                 final searchResults = snapshot.data!;
                 if (searchResults.isEmpty) {
                   return Center(
@@ -138,7 +129,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
                   );
                 }
                 return ListView.builder(
-                  controller: _scrollController,
                   itemCount: searchResults.length,
                   itemBuilder: ((context, index) {
                     final searchResult = searchResults[index];
@@ -181,6 +171,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
                 if (!snapshot.hasData) {
                   return const Center(child: CircularProgressIndicator());
                 }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
                 final searchResults = snapshot.data!;
                 if (searchResults.isEmpty) {
                   return Center(
@@ -198,7 +191,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
                       flex: 1,
                       child: Stack(children: [
                         ListView.builder(
-                          controller: _scrollController,
                           itemCount: searchResults.length,
                           itemBuilder: ((context, index) {
                             final searchResult = searchResults[index];
