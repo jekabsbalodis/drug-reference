@@ -92,48 +92,54 @@ class _WelcomeState extends State<Welcome> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Widget mainContent = Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        const Spacer(),
-        FilledButton(
-            onPressed: () => _openSearchScreen(),
-            child: const Text('Meklēt medikamentus')),
-        const SizedBox(height: 48),
-        Text.rich(
-          TextSpan(
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(color: Theme.of(context).colorScheme.onSurface),
-            children: [
-              TextSpan(text: termsPrompt[0]),
-              TextSpan(
-                  text: termsPrompt[1],
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      decoration: TextDecoration.underline,
-                      decorationColor: Theme.of(context).colorScheme.onSurface,
-                      color: Theme.of(context).colorScheme.onSurface),
-                  recognizer: TapGestureRecognizer()..onTap = _openTermsScreen),
-              TextSpan(
-                  text: termsPrompt[2],
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface)),
-            ],
+    Text appBarTitle = const Text('Medikamentu pārbaude');
+    Widget mainContent = Padding(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          const Spacer(),
+          FilledButton(
+              onPressed: () => _openSearchScreen(),
+              child: const Text('Meklēt medikamentus')),
+          const SizedBox(height: 48),
+          Text.rich(
+            TextSpan(
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: Theme.of(context).colorScheme.onSurface),
+              children: [
+                TextSpan(text: termsPrompt[0]),
+                TextSpan(
+                    text: termsPrompt[1],
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        decoration: TextDecoration.underline,
+                        decorationColor:
+                            Theme.of(context).colorScheme.onSurface,
+                        color: Theme.of(context).colorScheme.onSurface),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = _openTermsScreen),
+                TextSpan(
+                    text: termsPrompt[2],
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface)),
+              ],
+            ),
+          )
+              .animate(
+                autoPlay: false,
+                controller: _animationController,
+              )
+              .shake(),
+          const SizedBox(height: 24),
+          AcceptTermsCheckbox(
+            checkboxState: _isAccepted,
+            onCheckboxPress: _setCheckboxValue,
           ),
-        )
-            .animate(
-              autoPlay: false,
-              controller: _animationController,
-            )
-            .shake(),
-        const SizedBox(height: 24),
-        AcceptTermsCheckbox(
-          checkboxState: _isAccepted,
-          onCheckboxPress: _setCheckboxValue,
-        ),
-        const SizedBox(height: 40),
-      ],
+          const SizedBox(height: 40),
+        ],
+      ),
     );
     return LayoutBuilder(builder: (ctx, constraints) {
       final width = constraints.maxWidth;
@@ -141,37 +147,20 @@ class _WelcomeState extends State<Welcome> with TickerProviderStateMixin {
       if (width < 600) {
         return SelectionArea(
           child: Scaffold(
-            appBar: AppBar(
-              title: const Text('Medikamentu pārbaude'),
-            ),
-            body: Padding(
-              padding: const EdgeInsets.all(8),
-              child: mainContent,
-            ),
+            appBar: AppBar(title: appBarTitle),
+            body: mainContent,
           ),
         );
       } else {
         return SelectionArea(
           child: Scaffold(
             appBar: AppBar(
-              title: const Align(
-                alignment: Alignment.center,
-                child: SizedBox(
-                  width: 600,
-                  child: Text('Medikamentu pārbaude'),
-                ),
-              ),
-            ),
+                title: Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(width: 600, child: appBarTitle))),
             body: Align(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 600,
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: mainContent,
-                ),
-              ),
-            ),
+                alignment: Alignment.center,
+                child: SizedBox(width: 600, child: mainContent)),
           ),
         );
       }
