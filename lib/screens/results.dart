@@ -26,14 +26,17 @@ class ResultsScreen extends StatefulWidget {
 class _ResultsScreenState extends State<ResultsScreen> {
   late String _searchTerm;
   late SearchMode _searchMode;
+  late Future<List<Medication>> _futureSearchResults;
   Widget _selectedResult = const Text('Izvēlies medikamentu no saraksta');
   final ScrollController _scrollController = ScrollController();
+  bool _isReloading = false;
 
   @override
   void initState() {
     super.initState();
     _searchTerm = widget.searchTerm;
     _searchMode = widget.searchMode;
+    _futureSearchResults = searchResults(_searchMode, _searchTerm);
   }
 
   Future<List<Medication>> searchResults(
@@ -80,14 +83,19 @@ class _ResultsScreenState extends State<ResultsScreen> {
     }
   }
 
-  void _submitNewSearchTerm(String searchTerm, SearchMode searchMode) {
+  void _submitNewSearchTerm(String searchTerm, SearchMode searchMode) async {
     setState(() {
+      _isReloading = true;
       _searchTerm = searchTerm;
       _searchMode = searchMode;
-      searchResults(_searchMode, _searchTerm);
+      _futureSearchResults = searchResults(_searchMode, _searchTerm);
       _selectedResult = const Text('Izvēlies medikamentu no saraksta');
     });
     _scrollToTop();
+    await _futureSearchResults;
+    setState(() {
+      _isReloading = false;
+    });
   }
 
   void _selectMedicationNewScreen(
@@ -121,9 +129,12 @@ class _ResultsScreenState extends State<ResultsScreen> {
           child: Scaffold(
             appBar: AppBar(title: const Text('Medikamentu references')),
             body: FutureBuilder(
-              future: searchResults(_searchMode, _searchTerm),
+              future: _futureSearchResults,
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (_isReloading) {
                   return const Center(child: CircularProgressIndicator());
                 }
                 final searchResults = snapshot.data!;
@@ -176,9 +187,12 @@ class _ResultsScreenState extends State<ResultsScreen> {
           child: Scaffold(
             appBar: AppBar(title: const Text('Medikamentu references')),
             body: FutureBuilder(
-              future: searchResults(_searchMode, _searchTerm),
+              future: _futureSearchResults,
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (_isReloading) {
                   return const Center(child: CircularProgressIndicator());
                 }
                 final searchResults = snapshot.data!;
