@@ -134,14 +134,24 @@ class MedicationScreen extends StatelessWidget {
               style: textStyleLarge,
               children: [
                 TextSpan(text: noInformation[0]),
-                TextSpan(
-                    text: noInformation[1],
-                    style: textStyleLarge.copyWith(
-                        decoration: TextDecoration.underline,
-                        decorationColor:
-                            Theme.of(context).colorScheme.onSurface,
-                        color: Theme.of(context).colorScheme.onSurface),
-                    recognizer: TapGestureRecognizer()..onTap = openUrl),
+                WidgetSpan(
+                  child: TextButton(
+                    onPressed: openUrl,
+                    style: TextButton.styleFrom(
+                      minimumSize: Size.zero,
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    child: Text(
+                      noInformation[1],
+                      style: textStyleLarge.copyWith(
+                          decoration: TextDecoration.underline,
+                          decorationColor:
+                              Theme.of(context).colorScheme.onSurface,
+                          color: Theme.of(context).colorScheme.onSurface),
+                    ),
+                  ),
+                ),
                 TextSpan(
                   text: termsPrompt[2],
                   style: textStyleLarge,

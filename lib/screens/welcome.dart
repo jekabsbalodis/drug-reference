@@ -6,8 +6,10 @@ import 'package:drug_reference/widgets/accept_terms_alert.dart';
 import 'package:drug_reference/widgets/accept_terms_checkbox.dart';
 import 'package:drug_reference/widgets/medication_search.dart';
 import 'package:drug_reference/widgets/search_mode_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class Welcome extends StatefulWidget {
@@ -104,34 +106,51 @@ class _WelcomeState extends State<Welcome> with TickerProviderStateMixin {
               child: const Text('Meklēt medikamentus')),
           const SizedBox(height: 48),
           Text.rich(
+            textAlign: TextAlign.center,
+            softWrap: true,
             TextSpan(
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .copyWith(color: Theme.of(context).colorScheme.onSurface),
               children: [
-                TextSpan(text: termsPrompt[0]),
                 TextSpan(
-                    text: termsPrompt[1],
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        decoration: TextDecoration.underline,
-                        decorationColor:
-                            Theme.of(context).colorScheme.onSurface,
-                        color: Theme.of(context).colorScheme.onSurface),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = _openTermsScreen),
+                  text: termsPrompt[0],
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: Theme.of(context).colorScheme.onSurface),
+                ),
+                WidgetSpan(
+                  child: TextButton(
+                    onPressed: _openTermsScreen,
+                    style: TextButton.styleFrom(
+                      minimumSize: Size.zero,
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    child: Text(
+                      termsPrompt[1],
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            decoration: TextDecoration.underline,
+                            decorationColor:
+                                Theme.of(context).colorScheme.onSurface,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                    ),
+                  )
+                      .animate(
+                        autoPlay: false,
+                        controller: _animationController,
+                      )
+                      .shake(),
+                ),
                 TextSpan(
-                    text: termsPrompt[2],
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface)),
+                  text: termsPrompt[2],
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: Theme.of(context).colorScheme.onSurface),
+                ),
               ],
             ),
-          )
-              .animate(
-                autoPlay: false,
-                controller: _animationController,
-              )
-              .shake(),
+          ),
           const SizedBox(height: 24),
           AcceptTermsCheckbox(
             checkboxState: _isAccepted,
