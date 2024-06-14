@@ -2,7 +2,6 @@ import 'package:drug_reference/constants.dart';
 import 'package:drug_reference/models/medication.dart';
 import 'package:drug_reference/widgets/medication_information_in_comp.dart';
 import 'package:drug_reference/widgets/medication_information_out_comp.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 

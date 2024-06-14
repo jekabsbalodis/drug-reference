@@ -6,10 +6,7 @@ import 'package:drug_reference/widgets/accept_terms_alert.dart';
 import 'package:drug_reference/widgets/accept_terms_checkbox.dart';
 import 'package:drug_reference/widgets/medication_search.dart';
 import 'package:drug_reference/widgets/search_mode_button.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class Welcome extends StatefulWidget {
