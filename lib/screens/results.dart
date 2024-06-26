@@ -197,13 +197,31 @@ class _ResultsScreenState extends State<ResultsScreen> {
                 }
                 final searchResults = snapshot.data!;
                 if (searchResults.isEmpty) {
-                  return Center(
-                    child: Text(
-                      emptyResults,
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface),
-                      textAlign: TextAlign.center,
-                    ),
+                  return Stack(
+                    children: [
+                      Center(
+                        child: Text(
+                          emptyResults,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 8, 8),
+                          child: FloatingActionButton(
+                            onPressed: _newSearch,
+                            child: const Icon(Icons.search),
+                          ),
+                        ),
+                      ),
+                    ],
                   );
                 }
                 return Row(
