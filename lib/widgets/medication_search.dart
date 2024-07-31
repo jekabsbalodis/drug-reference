@@ -48,25 +48,31 @@ class _MedicationSearchState extends State<MedicationSearch> {
         padding: EdgeInsets.fromLTRB(16, 16, 16, keyboardSpace + 16),
         child: Column(
           children: [
-            const Text.rich(
-              TextSpan(children: [
-                TextSpan(text: 'Meklēt vari pēc aktīvās '),
-                TextSpan(
-                  text: 'vielas',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                TextSpan(text: ' nosaukuma,\nražotāja piešķirtā  '),
-                TextSpan(
-                  text: 'medikamenta',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                TextSpan(text: ' nosaukuma\nvai medikamenta reģistrācijas '),
-                TextSpan(
-                  text: 'numura',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                TextSpan(text: '.'),
-              ]),
+            Text.rich(
+              TextSpan(
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: Theme.of(context).colorScheme.onSurface),
+                  children: const [
+                    TextSpan(text: 'Meklēt vari pēc aktīvās '),
+                    TextSpan(
+                      text: 'vielas',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    TextSpan(text: ' nosaukuma,\nražotāja piešķirtā  '),
+                    TextSpan(
+                      text: 'medikamenta',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    TextSpan(
+                        text: ' nosaukuma\nvai medikamenta reģistrācijas '),
+                    TextSpan(
+                      text: 'numura',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    TextSpan(text: '.'),
+                  ]),
             ),
             const Divider(),
             SearchModeButton(
