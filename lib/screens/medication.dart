@@ -17,7 +17,7 @@ class MedicationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Uri url = Uri.parse(const String.fromEnvironment('ANTIDOPING_URL'));
+    final Uri url = Uri.parse(Uri.decodeFull(const String.fromEnvironment('ANTIDOPING_URL')));
 
     Future<void> openUrl() async {
       if (!await launchUrl(url)) {
