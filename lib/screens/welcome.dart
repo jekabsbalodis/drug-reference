@@ -16,7 +16,7 @@ class Welcome extends StatefulWidget {
   State<Welcome> createState() => _WelcomeState();
 }
 
-class _WelcomeState extends State<Welcome> with TickerProviderStateMixin {
+class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
   bool _isAccepted = false;
   late AnimationController _animationController;
   List<Medication> searchResults = [];
