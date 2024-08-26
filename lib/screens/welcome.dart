@@ -8,6 +8,7 @@ import 'package:drug_reference/widgets/medication_search.dart';
 import 'package:drug_reference/widgets/search_mode_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome({super.key});
@@ -21,6 +22,14 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   List<Medication> searchResults = [];
   List<String> searchTerms = [];
+  final Uri url = Uri.parse(
+      Uri.decodeFull(const String.fromEnvironment('ACCESSIBILITY_NOTICE')));
+
+  Future<void> openUrl() async {
+    if (!await launchUrl(url)) {
+      throw Exception('Nevarēja atvērt adresi $url');
+    }
+  }
 
   void _openTermsScreen() {
     showDialog(
@@ -152,6 +161,23 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
           AcceptTermsCheckbox(
             checkboxState: _isAccepted,
             onCheckboxPress: _setCheckboxValue,
+          ),
+          const SizedBox(height: 24),
+          TextButton(
+            onPressed: openUrl,
+            style: TextButton.styleFrom(
+              minimumSize: Size.zero,
+              padding: EdgeInsets.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+            child: Text(
+              accessibilityNotice,
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    decoration: TextDecoration.underline,
+                    decorationColor: Theme.of(context).colorScheme.onSurface,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+            ),
           ),
           const SizedBox(height: 40),
         ],

@@ -16,3 +16,4 @@ const List<String> noInformation = [
   'Latvijas Antidopinga biroju',
   ', lai iegūtu informāciju par medikamenta izmantošanu sportā.',
 ];
+const String accessibilityNotice = 'Piekļūstamības paziņojums';
