@@ -17,3 +17,5 @@ const List<String> noInformation = [
   ', lai iegūtu informāciju par medikamenta izmantošanu sportā.',
 ];
 const String accessibilityNotice = 'Piekļūstamības paziņojums';
+
+const String analyticsNotice = 'Vai piekrītat analītisko datu uzkrāšanai par mājaslapas apmeklējumu?';

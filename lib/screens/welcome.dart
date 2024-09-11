@@ -9,6 +9,7 @@ import 'package:drug_reference/widgets/search_mode_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:web/web.dart' as web;
 
 class Welcome extends StatefulWidget {
   const Welcome({super.key});
@@ -81,9 +82,47 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
     ));
   }
 
+  void _showAnalyticsBanner() {
+    // Check if the banner has already been shown using a flag
+    bool hasShownBanner = false;
+
+    if (!hasShownBanner) {
+      ScaffoldMessenger.of(context).showMaterialBanner(
+        MaterialBanner(
+          content: const Text(analyticsNotice),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+              },
+              child: const Text('Nepiekrītu'),
+            ),
+            FilledButton(
+              onPressed: () {
+                final script = web.HTMLScriptElement()
+                  ..src = 'https://static.cloudflareinsights.com/beacon.min.js'
+                  ..type = 'text/javascript'
+                  ..defer = true
+                  ..setAttribute('data-cf-beacon',
+                      '{"token": "129d750171cc43a984c453cb84216ee2"}');
+
+                web.document.body?.append(script);
+                ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                print('analytics added');
+              },
+              child: const Text('Piekrītu'),
+            ),
+          ],
+        ),
+      );
+      hasShownBanner = true; // Set flag to prevent future shows
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _showAnalyticsBanner());
     _animationController = AnimationController(vsync: this);
     _animationController.addListener(() {
       if (_animationController.isCompleted) {
