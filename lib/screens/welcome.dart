@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:drug_reference/constants.dart';
 import 'package:drug_reference/main.dart';
 import 'package:drug_reference/models/medication.dart';
@@ -115,7 +116,10 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
           ],
         ),
       );
-      hasShownBanner = true; // Set flag to prevent future shows
+      hasShownBanner = true;
+      Timer(const Duration(seconds: 10), () {
+        ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+      });
     }
   }
 
