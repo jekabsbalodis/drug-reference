@@ -18,4 +18,5 @@ const List<String> noInformation = [
 ];
 const String accessibilityNotice = 'Piekļūstamības paziņojums';
 
-const String analyticsNotice = 'Vai piekrītat analītisko datu uzkrāšanai par mājaslapas apmeklējumu?';
+const String analyticsNotice =
+    'Vai piekrītat analītisko datu uzkrāšanai par mājaslapas apmeklējumu?';

@@ -105,11 +105,10 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
                   ..type = 'text/javascript'
                   ..defer = true
                   ..setAttribute('data-cf-beacon',
-                      '{"token": "129d750171cc43a984c453cb84216ee2"}');
+                      '{"token": "${const String.fromEnvironment('ANALYTICS_TOKEN')}"}');
 
                 web.document.body?.append(script);
                 ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                print('analytics added');
               },
               child: const Text('Piekrītu'),
             ),
