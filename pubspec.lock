@@ -5,10 +5,10 @@ packages:
     dependency: transitive
     description:
       name: app_links
-      sha256: "4acba851087b25136e8f6e32a53bd4536eb3bec69947ddb66e7b9a5792ceb0c7"
+      sha256: ad1a6d598e7e39b46a34f746f9a8b011ee147e4c275d407fa457e7a62f84dd99
       url: "https://pub.dev"
     source: hosted
-    version: "6.2.0"
+    version: "6.3.2"
   app_links_linux:
     dependency: transitive
     description:
@@ -109,10 +109,10 @@ packages:
     dependency: transitive
     description:
       name: crypto
-      sha256: "1dceb0cf05cb63a7852c11560060e53ec2f182079a16ced6f4395c5b0875baf8"
+      sha256: ec30d999af904f33454ba22ed9a86162b35e52b44ac4807d1d93c288041d7d27
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.4"
+    version: "3.0.5"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -324,10 +324,10 @@ packages:
     dependency: transitive
     description:
       name: mime
-      sha256: "2e123074287cc9fd6c09de8336dae606d1ddb88d9ac47358826db698c176a1f2"
+      sha256: "801fd0b26f14a4a58ccb09d5892c3fbdeff209594300a542492cf13fba9d247a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.5"
+    version: "1.0.6"
   path:
     dependency: transitive
     description:
@@ -444,18 +444,18 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences
-      sha256: c272f9cabca5a81adc9b0894381e9c1def363e980f960fa903c604c471b22f68
+      sha256: "746e5369a43170c25816cc472ee016d3a66bc13fcf430c0bc41ad7b4b2922051"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.1"
+    version: "2.3.2"
   shared_preferences_android:
     dependency: transitive
     description:
       name: shared_preferences_android
-      sha256: a7e8467e9181cef109f601e3f65765685786c1a738a83d7fbbde377589c0d974
+      sha256: "480ba4345773f56acda9abf5f50bd966f581dac5d514e5fc4a18c62976bbba7e"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.1"
+    version: "2.3.2"
   shared_preferences_foundation:
     dependency: transitive
     description:
@@ -593,10 +593,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_android
-      sha256: "94d8ad05f44c6d4e2ffe5567ab4d741b82d62e3c8e288cc1fcea45965edf47c9"
+      sha256: e35a698ac302dd68e41f73250bd9517fe3ab5fa4f18fe4647a0872db61bacbab
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.8"
+    version: "6.3.10"
   url_launcher_ios:
     dependency: transitive
     description:
@@ -718,5 +718,5 @@ packages:
     source: hosted
     version: "2.0.2"
 sdks:
-  dart: ">=3.4.0 <4.0.0"
-  flutter: ">=3.22.0"
+  dart: ">=3.5.0 <4.0.0"
+  flutter: ">=3.24.0"
