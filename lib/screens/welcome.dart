@@ -90,7 +90,13 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
     if (!hasShownBanner) {
       ScaffoldMessenger.of(context).showMaterialBanner(
         MaterialBanner(
-          content: const Text(analyticsNotice),
+          content: Text(
+            analyticsNotice,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(color: Theme.of(context).colorScheme.onSurface),
+          ),
           actions: <Widget>[
             TextButton(
               onPressed: () {
