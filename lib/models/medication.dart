@@ -35,15 +35,15 @@ class Medication {
       form: data['pharmaceutical_form_lv'] as String,
       substance: data['active_substance'] as String,
       strength: data['strength_lv'] as String,
-      prohibitedOutComp: data['Aizliegts ārpus sacensībām'] as String,
-      prohibitedInComp: data['Aizliegts sacensību laikā'] as String,
+      prohibitedOutComp: data['aizliegts_arpus_sacensibam'] as String,
+      prohibitedInComp: data['aizliegts_sacensibu_laika'] as String,
       prohibitedClass:
-          data['Aizliegto vielu un metožu saraksta klase'] as String,
-      notes: data['Piezīmes par lietošanu'] as String,
+          data['aizliegto_vielu_un_metozu_saraksta_klase'] as String,
+      notes: data['piezimes_par_lietosanu'] as String,
       prohibitedSportsOutComp:
-          data['Sporta veidi, kuros aizliegts ārpus sacensībām'] as String,
+          data['sporta_veidi_kuros_aizliegts_arpus_sacensibam'] as String,
       prohibitedSportsInComp:
-          data['Sporta veidi, kuros aizliegts sacensību laikā'] as String,
+          data['sporta_veidi_kuros_aizliegts_sacensibu_laika'] as String,
     );
   }
   String get formattedForm {
