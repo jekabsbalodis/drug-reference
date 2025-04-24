@@ -41418,7 +41418,7 @@ L(a){return new A.zf(new A.aq5(this),null)}}
 A.aq6.prototype={
 $1(a){var s=J.av(a)
 A.b4(s.h(a,"medicine_name"))
-return new A.hQ(A.b4(s.h(a,"short_name")),A.b4(s.h(a,"authorisation_no")),A.b4(s.h(a,"pharmaceutical_form_lv")),A.b4(s.h(a,"active_substance")),A.b4(s.h(a,"strength_lv")),A.b4(s.h(a,"Aizliegts \u0101rpus sacens\u012bb\u0101m")),A.b4(s.h(a,"Aizliegts sacens\u012bbu laik\u0101")),A.b4(s.h(a,"Aizliegto vielu un meto\u017eu saraksta klase")),A.b4(s.h(a,"Piez\u012bmes par lieto\u0161anu")),A.b4(s.h(a,"Sporta veidi, kuros aizliegts \u0101rpus sacens\u012bb\u0101m")),A.b4(s.h(a,"Sporta veidi, kuros aizliegts sacens\u012bbu laik\u0101")))},
+return new A.hQ(A.b4(s.h(a,"short_name")),A.b4(s.h(a,"authorisation_no")),A.b4(s.h(a,"pharmaceutical_form_lv")),A.b4(s.h(a,"active_substance")),A.b4(s.h(a,"strength_lv")),A.b4(s.h(a,"aizliegts_arpus_sacensibam")),A.b4(s.h(a,"aizliegts_sacensibu_laika")),A.b4(s.h(a,"aizliegto_vielu_un_metozu_saraksta_klase")),A.b4(s.h(a,"piezimes_par_lietosanu")),A.b4(s.h(a,"sporta_veidi_kuros_aizliegts_arpus_sacensibam")),A.b4(s.h(a,"sporta_veidi_kuros_aizliegts_sacensibu_laika")))},
 $S:263}
 A.apV.prototype={
 $1(a){return new A.mY(this.a.gagm(),null)},
